@@ -1,21 +1,21 @@
 import React from 'react'
-import { View, Animated, Image, Dimensions } from 'react-native'
+import { View, Animated, Image } from 'react-native'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import Touchable from 'react-native-platform-touchable'
 import { compose, withState, withProps } from 'recompose'
 
 import NavigationBar from 'component/navbar'
-import styles from './style'
+import styles, { PARALLAX_HEADER_HEIGHT } from './style'
 
-const window = Dimensions.get('window')
+const AnimatedParallax = Animated.createAnimatedComponent(ParallaxScrollView)
 
 @compose(
 	withState('scrollY', 'setScrollY', () => new Animated.Value(0)),
 	withProps(({ scrollY }) => ({
 		opacityRange: scrollY.interpolate({
-			inputRange: [0, 100],
-			outputRange: [0, 1],
+			inputRange: [0, 150, 200],
+			outputRange: [0, 0.5, 1],
 			extrapolate: 'clamp'
 		})
 	}))
@@ -26,20 +26,19 @@ export default class Main extends React.Component {
 	}
 
 	renderBackground = () => (
-		<Image
-			style={{ width: window.width }}
-			source={require('asset/wuyu.png')}
-		/>
+		<Image style={styles.image} source={require('asset/wuyu.png')} />
 	)
 
 	renderFixedHeader = () => {
 		const { opacityRange } = this.props
 		return (
-			<NavigationBar
-				title={{
-					title: '无鱼排行'
-				}}
-			/>
+			<Animated.View style={{ opacity: opacityRange }}>
+				<NavigationBar
+					title={{
+						title: '无鱼排行'
+					}}
+				/>
+			</Animated.View>
 		)
 	}
 
@@ -47,13 +46,24 @@ export default class Main extends React.Component {
 		const { scrollY } = this.props
 		return (
 			<View style={styles.container}>
-				<ParallaxScrollView
+				<AnimatedParallax
 					backgroundSpeed={10}
-					parallaxHeaderHeight={400}
+					parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
 					renderBackground={this.renderBackground}
 					renderFixedHeader={this.renderFixedHeader}
 					scrollEventThrottle={16}
-					onScroll={e => console.log(e)}
+					onScroll={Animated.event(
+						[
+							{
+								nativeEvent: {
+									contentOffset: {
+										y: scrollY
+									}
+								}
+							}
+						],
+						{ useNativeDriver: true }
+					)}
 				>
 					<Touchable onPress={this.handleCardClick}>
 						<Card containerStyle={styles.card.container}>
@@ -80,7 +90,7 @@ export default class Main extends React.Component {
 							<Text h4>text am I</Text>
 						</Card>
 					</Touchable>
-				</ParallaxScrollView>
+				</AnimatedParallax>
 			</View>
 		)
 	}
