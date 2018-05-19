@@ -6,8 +6,8 @@ export const BORDER_RADIUS = 8
 
 export default {
 	container: {
-		flex: 1,
-		backgroundColor: 'white'
+		flex: 1
+		// backgroundColor: 'white'
 	},
 	image: {
 		width: window.width,

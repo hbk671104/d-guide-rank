@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Animated, ImageBackground, TouchableOpacity } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import { compose, withState, withProps } from 'recompose'
@@ -82,7 +83,10 @@ export default class Main extends React.Component {
 		const { scrollY } = this.props
 		const { rankingList } = this.state
 		return (
-			<View style={styles.container}>
+			<SafeAreaView
+				style={styles.container}
+				forceInset={{ top: 'never' }}
+			>
 				<AnimatedParallax
 					backgroundSpeed={10}
 					parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
@@ -104,7 +108,7 @@ export default class Main extends React.Component {
 				>
 					{rankingList.map(this.renderCard)}
 				</AnimatedParallax>
-			</View>
+			</SafeAreaView>
 		)
 	}
 }
