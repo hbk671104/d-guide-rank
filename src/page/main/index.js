@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Animated, Image, TouchableOpacity } from 'react-native'
+import { View, Animated, ImageBackground, TouchableOpacity } from 'react-native'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import { compose, withState, withProps } from 'recompose'
 
 import { rankings } from 'api'
 import NavigationBar from 'component/navbar'
-import styles, { PARALLAX_HEADER_HEIGHT } from './style'
+import styles, { PARALLAX_HEADER_HEIGHT, BORDER_RADIUS } from './style'
 
 const AnimatedParallax = Animated.createAnimatedComponent(ParallaxScrollView)
 
@@ -21,8 +21,17 @@ const AnimatedParallax = Animated.createAnimatedComponent(ParallaxScrollView)
 	}))
 )
 export default class Main extends React.Component {
+	state = {
+		rankingList: []
+	}
+
 	componentDidMount() {
-		console.log('haha')
+		this.loadRankings()
+	}
+
+	loadRankings = async () => {
+		const { body } = await rankings()
+		this.setState({ rankingList: body.data })
 	}
 
 	handleCardClick = id => {
@@ -30,7 +39,10 @@ export default class Main extends React.Component {
 	}
 
 	renderBackground = () => (
-		<Image style={styles.image} source={require('asset/wuyu.png')} />
+		<ImageBackground
+			style={styles.image}
+			source={require('asset/wuyu.png')}
+		/>
 	)
 
 	renderFixedHeader = () => {
@@ -46,8 +58,29 @@ export default class Main extends React.Component {
 		)
 	}
 
+	renderCard = (r, i) => (
+		<TouchableOpacity key={i} onPress={this.handleCardClick}>
+			<Card containerStyle={styles.card.container}>
+				<ImageBackground
+					style={styles.card.image}
+					imageStyle={{ borderRadius: BORDER_RADIUS }}
+					source={require('asset/homer.jpg')}
+				>
+					<View style={styles.card.cover} />
+					<Text style={styles.card.title} h3>
+						{r.desc}
+					</Text>
+					<Text style={styles.card.subtitle} h4>
+						{r.name}
+					</Text>
+				</ImageBackground>
+			</Card>
+		</TouchableOpacity>
+	)
+
 	render() {
 		const { scrollY } = this.props
+		const { rankingList } = this.state
 		return (
 			<View style={styles.container}>
 				<AnimatedParallax
@@ -69,31 +102,7 @@ export default class Main extends React.Component {
 						{ useNativeDriver: true }
 					)}
 				>
-					<TouchableOpacity onPress={this.handleCardClick}>
-						<Card containerStyle={styles.card.container}>
-							<Text h4>text am I</Text>
-						</Card>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Card containerStyle={styles.card.container}>
-							<Text h4>text am I</Text>
-						</Card>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Card containerStyle={styles.card.container}>
-							<Text h4>text am I</Text>
-						</Card>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Card containerStyle={styles.card.container}>
-							<Text h4>text am I</Text>
-						</Card>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Card containerStyle={styles.card.container}>
-							<Text h4>text am I</Text>
-						</Card>
-					</TouchableOpacity>
+					{rankingList.map(this.renderCard)}
 				</AnimatedParallax>
 			</View>
 		)
