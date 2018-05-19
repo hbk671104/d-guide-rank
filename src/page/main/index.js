@@ -1,10 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
-import NavigationBar from 'react-native-navbar'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import Touchable from 'react-native-platform-touchable'
+import NavigationBar from 'component/navbar'
 import styles from './style'
 
 export default class Main extends React.Component {
@@ -24,7 +23,7 @@ export default class Main extends React.Component {
 		</View>
 	)
 
-	renderStickyHeader = () => (
+	renderFixedHeader = () => (
 		<NavigationBar
 			title={{
 				title: 'Hello, world'
@@ -34,36 +33,40 @@ export default class Main extends React.Component {
 
 	render() {
 		return (
-			<SafeAreaView
-				style={styles.container}
-				forceInset={{ top: 'never' }}
-			>
-				{/* {this.renderStickyHeader()} */}
+			<View style={styles.container}>
 				<ParallaxScrollView
 					backgroundColor="pink"
-					// contentBackgroundColor="pink"
 					parallaxHeaderHeight={200}
 					renderForeground={this.renderForeground}
-					// stickyHeaderHeight={8}
-					// renderStickyHeader={this.renderStickyHeader}
+					renderFixedHeader={this.renderFixedHeader}
 				>
 					<Touchable onPress={this.handleCardClick}>
-						<Card title="CARD WITH DIVIDER">
+						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
 					</Touchable>
 					<Touchable>
-						<Card title="CARD WITH DIVIDER">
+						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
 					</Touchable>
 					<Touchable>
-						<Card title="CARD WITH DIVIDER">
+						<Card containerStyle={styles.card.container}>
+							<Text h4>text am I</Text>
+						</Card>
+					</Touchable>
+					<Touchable>
+						<Card containerStyle={styles.card.container}>
+							<Text h4>text am I</Text>
+						</Card>
+					</Touchable>
+					<Touchable>
+						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
 					</Touchable>
 				</ParallaxScrollView>
-			</SafeAreaView>
+			</View>
 		)
 	}
 }
