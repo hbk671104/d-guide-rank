@@ -5,6 +5,7 @@ import { Card, Text } from 'react-native-elements'
 import Touchable from 'react-native-platform-touchable'
 import { compose, withState, withProps } from 'recompose'
 
+// import { getRanksInfo } from 'api'
 import NavigationBar from 'component/navbar'
 import styles, { PARALLAX_HEADER_HEIGHT } from './style'
 
@@ -21,6 +22,10 @@ const AnimatedParallax = Animated.createAnimatedComponent(ParallaxScrollView)
 	}))
 )
 export default class Main extends React.Component {
+	componentDidMount() {
+		console.log('haha')
+	}
+
 	handleCardClick = id => {
 		this.props.navigation.navigate('Rank', { id })
 	}
