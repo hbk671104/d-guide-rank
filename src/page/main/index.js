@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Animated } from 'react-native'
+import { View, Animated, Image, Dimensions } from 'react-native'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import Touchable from 'react-native-platform-touchable'
@@ -7,6 +7,8 @@ import { compose, withState, withProps } from 'recompose'
 
 import NavigationBar from 'component/navbar'
 import styles from './style'
+
+const window = Dimensions.get('window')
 
 @compose(
 	withState('scrollY', 'setScrollY', () => new Animated.Value(0)),
@@ -23,16 +25,11 @@ export default class Main extends React.Component {
 		this.props.navigation.navigate('Rank', { id })
 	}
 
-	renderForeground = () => (
-		<View
-			style={{
-				height: 200,
-				justifyContent: 'center',
-				alignItems: 'center'
-			}}
-		>
-			<Text h1>Hello World!</Text>
-		</View>
+	renderBackground = () => (
+		<Image
+			style={{ width: window.width }}
+			source={require('asset/wuyu.png')}
+		/>
 	)
 
 	renderFixedHeader = () => {
@@ -51,20 +48,12 @@ export default class Main extends React.Component {
 		return (
 			<View style={styles.container}>
 				<ParallaxScrollView
-					backgroundColor="pink"
-					parallaxHeaderHeight={200}
-					renderForeground={this.renderForeground}
+					backgroundSpeed={10}
+					parallaxHeaderHeight={400}
+					renderBackground={this.renderBackground}
 					renderFixedHeader={this.renderFixedHeader}
 					scrollEventThrottle={16}
-					scrollEvent={Animated.event([
-						{
-							nativeEvent: {
-								contentOffset: {
-									y: scrollY
-								}
-							}
-						}
-					])}
+					onScroll={e => console.log(e)}
 				>
 					<Touchable onPress={this.handleCardClick}>
 						<Card containerStyle={styles.card.container}>
