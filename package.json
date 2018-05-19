@@ -27,6 +27,7 @@
 		"react-native-navbar": "^2.1.0",
 		"react-native-parallax-scroll-view": "^0.21.0",
 		"react-native-platform-touchable": "^1.1.1",
-		"react-navigation": "^2.0.1"
+		"react-navigation": "^2.0.1",
+		"recompose": "^0.27.0"
 	}
 }

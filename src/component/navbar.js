@@ -3,7 +3,10 @@ import NavigationBar from 'react-native-navbar'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 const navBar = props => (
-	<NavigationBar {...props} containerStyle={styles.container} />
+	<NavigationBar
+		{...props}
+		containerStyle={[styles.container, props.containerStyle]}
+	/>
 )
 
 const styles = {

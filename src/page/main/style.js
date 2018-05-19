@@ -4,7 +4,11 @@ export default {
 	},
 	card: {
 		container: {
-			borderRadius: 10
+			borderRadius: 8,
+			borderWidth: 0,
+			shadowOpacity: 0.1,
+			shadowRadius: 8,
+			shadowColor: 'black'
 		}
 	}
 }
