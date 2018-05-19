@@ -1,11 +1,10 @@
 import React from 'react'
-import { View, Animated, Image } from 'react-native'
+import { View, Animated, Image, TouchableOpacity } from 'react-native'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
-import Touchable from 'react-native-platform-touchable'
 import { compose, withState, withProps } from 'recompose'
 
-// import { getRanksInfo } from 'api'
+import { rankings } from 'api'
 import NavigationBar from 'component/navbar'
 import styles, { PARALLAX_HEADER_HEIGHT } from './style'
 
@@ -70,31 +69,31 @@ export default class Main extends React.Component {
 						{ useNativeDriver: true }
 					)}
 				>
-					<Touchable onPress={this.handleCardClick}>
+					<TouchableOpacity onPress={this.handleCardClick}>
 						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
-					</Touchable>
-					<Touchable>
+					</TouchableOpacity>
+					<TouchableOpacity>
 						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
-					</Touchable>
-					<Touchable>
+					</TouchableOpacity>
+					<TouchableOpacity>
 						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
-					</Touchable>
-					<Touchable>
+					</TouchableOpacity>
+					<TouchableOpacity>
 						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
-					</Touchable>
-					<Touchable>
+					</TouchableOpacity>
+					<TouchableOpacity>
 						<Card containerStyle={styles.card.container}>
 							<Text h4>text am I</Text>
 						</Card>
-					</Touchable>
+					</TouchableOpacity>
 				</AnimatedParallax>
 			</View>
 		)
