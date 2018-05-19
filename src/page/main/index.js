@@ -1,34 +1,51 @@
 import React from 'react'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
+import NavigationBar from 'react-native-navbar'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import Touchable from 'react-native-platform-touchable'
 import styles from './style'
 
-export default class App extends React.Component {
+export default class Main extends React.Component {
 	handleCardClick = id => {
 		this.props.navigation.navigate('Rank', { id })
 	}
 
+	renderForeground = () => (
+		<View
+			style={{
+				height: 200,
+				justifyContent: 'center',
+				alignItems: 'center'
+			}}
+		>
+			<Text h1>Hello World!</Text>
+		</View>
+	)
+
+	renderStickyHeader = () => (
+		<NavigationBar
+			title={{
+				title: 'Hello, world'
+			}}
+		/>
+	)
+
 	render() {
 		return (
-			<View style={styles.container}>
+			<SafeAreaView
+				style={styles.container}
+				forceInset={{ top: 'never' }}
+			>
+				{/* {this.renderStickyHeader()} */}
 				<ParallaxScrollView
 					backgroundColor="pink"
 					// contentBackgroundColor="pink"
 					parallaxHeaderHeight={200}
-					renderForeground={() => (
-						<View
-							style={{
-								height: 200,
-								justifyContent: 'center',
-								alignItems: 'center'
-							}}
-						>
-							<Text h1>Hello World!</Text>
-						</View>
-					)}
+					renderForeground={this.renderForeground}
+					// stickyHeaderHeight={8}
+					// renderStickyHeader={this.renderStickyHeader}
 				>
 					<Touchable onPress={this.handleCardClick}>
 						<Card title="CARD WITH DIVIDER">
@@ -46,7 +63,7 @@ export default class App extends React.Component {
 						</Card>
 					</Touchable>
 				</ParallaxScrollView>
-			</View>
+			</SafeAreaView>
 		)
 	}
 }
