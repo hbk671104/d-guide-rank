@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
 const window = Dimensions.get('window')
-export const PARALLAX_HEADER_HEIGHT = 300
+export const PARALLAX_HEADER_HEIGHT = 250
 export const BORDER_RADIUS = 8
 
 export default {
@@ -22,9 +22,7 @@ export default {
 		container: {
 			padding: 0,
 			borderRadius: BORDER_RADIUS,
-			shadowOpacity: 0.1,
-			shadowRadius: 8,
-			shadowColor: 'black'
+			borderWidth: 0
 		},
 		cover: {
 			...StyleSheet.absoluteFillObject,
