@@ -9,6 +9,12 @@ export default {
 		flex: 1
 		// backgroundColor: 'white'
 	},
+	nabbar: {
+		image: {
+			height: 40,
+			width: 40
+		}
+	},
 	image: {
 		width: window.width,
 		height: PARALLAX_HEADER_HEIGHT

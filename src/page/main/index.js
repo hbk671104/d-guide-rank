@@ -1,5 +1,12 @@
 import React from 'react'
-import { View, Animated, ImageBackground, TouchableOpacity } from 'react-native'
+import {
+	View,
+	Animated,
+	ImageBackground,
+	Image,
+	TouchableOpacity,
+	ActivityIndicator
+} from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
@@ -23,6 +30,7 @@ const AnimatedParallax = Animated.createAnimatedComponent(ParallaxScrollView)
 )
 export default class Main extends React.Component {
 	state = {
+		loading: true,
 		rankingList: []
 	}
 
@@ -31,8 +39,14 @@ export default class Main extends React.Component {
 	}
 
 	loadRankings = async () => {
-		const { body } = await rankings()
-		this.setState({ rankingList: body.data })
+		try {
+			const { body } = await rankings()
+			this.setState({ rankingList: body.data })
+		} catch (error) {
+			console.log(error)
+		} finally {
+			this.setState({ loading: false })
+		}
 	}
 
 	handleCardClick = id => {
@@ -51,9 +65,12 @@ export default class Main extends React.Component {
 		return (
 			<Animated.View style={{ opacity: opacityRange }}>
 				<NavigationBar
-					title={{
-						title: '无鱼排行'
-					}}
+					title={
+						<Image
+							style={styles.nabbar.image}
+							source={require('asset/wuyu.png')}
+						/>
+					}
 				/>
 			</Animated.View>
 		)
@@ -81,7 +98,7 @@ export default class Main extends React.Component {
 
 	render() {
 		const { scrollY } = this.props
-		const { rankingList } = this.state
+		const { rankingList, loading } = this.state
 		return (
 			<SafeAreaView
 				style={styles.container}
@@ -89,6 +106,7 @@ export default class Main extends React.Component {
 			>
 				<AnimatedParallax
 					backgroundSpeed={10}
+					contentBackgroundColor={'#F8F8F8'}
 					parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
 					renderBackground={this.renderBackground}
 					renderFixedHeader={this.renderFixedHeader}
@@ -106,7 +124,11 @@ export default class Main extends React.Component {
 						{ useNativeDriver: true }
 					)}
 				>
-					{rankingList.map(this.renderCard)}
+					{loading ? (
+						<ActivityIndicator style={{ marginTop: 15 }} />
+					) : (
+						rankingList.map(this.renderCard)
+					)}
 				</AnimatedParallax>
 			</SafeAreaView>
 		)
