@@ -56,10 +56,7 @@ export default class Main extends React.Component {
 		<ImageBackground
 			// resizeMode="contain"
 			style={styles.image}
-			source={{
-				uri:
-					'https://nodecap-staging-file.oss-cn-beijing.aliyuncs.com/WechatIMG169.png'
-			}}
+			source={require('asset/wuyu.png')}
 		/>
 	)
 
