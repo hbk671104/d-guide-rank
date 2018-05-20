@@ -2,15 +2,34 @@ import React from 'react'
 import { View, FlatList } from 'react-native'
 import { Card, Text, Icon } from 'react-native-elements'
 
+import { rankItem } from 'api'
 import NavigationBar from 'component/navbar'
 import styles from './style'
 
 export default class Ranking extends React.Component {
 	state = {
-		loading: true
+		data: null,
+		loading: false
 	}
 
-	componentDidMount() {}
+	componentDidMount() {
+		this.loadRankingItem()
+	}
+
+	loadRankingItem = async () => {
+		try {
+			this.setState({ loading: true })
+			const item = this.props.navigation.getParam('item')
+			const {
+				body: { data }
+			} = await rankItem(item.name)
+			this.setState({ data: this.preprocessData(data) })
+		} catch (error) {
+			console.log(error)
+		} finally {
+			this.setState({ loading: false })
+		}
+	}
 
 	preprocessData = tickers => {
 		const votes = tickers.votes || []
@@ -36,7 +55,6 @@ export default class Ranking extends React.Component {
 	}
 
 	renderItem = ({ item }) => {
-		console.log(item)
 		return (
 			<Card containerStyle={styles.card.container}>
 				<View style={styles.card.wrapper}>
@@ -62,8 +80,8 @@ export default class Ranking extends React.Component {
 	}
 
 	render() {
+		const { data, loading } = this.state
 		const item = this.props.navigation.getParam('item')
-		const data = this.preprocessData(item)
 		return (
 			<View style={styles.container}>
 				<NavigationBar
@@ -82,6 +100,8 @@ export default class Ranking extends React.Component {
 				<FlatList
 					style={{ backgroundColor: '#F5F5F5' }}
 					data={data}
+					refreshing={loading}
+					onRefresh={this.loadRankingItem}
 					renderItem={this.renderItem}
 					keyExtractor={this.keyExtractor}
 				/>

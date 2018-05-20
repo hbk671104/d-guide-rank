@@ -24,4 +24,4 @@ const rankItem = async id => {
 	return await frisbee.get(`/api/rankings/${id}`)
 }
 
-export { createRanking, inviteVoter, vote, voteInfo, rankings }
+export { createRanking, inviteVoter, vote, voteInfo, rankings, rankItem }
