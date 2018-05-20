@@ -7,7 +7,6 @@ import {
 	TouchableOpacity,
 	ActivityIndicator
 } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
 import ParallaxScrollView from 'react-native-parallax-scroll-view'
 import { Card, Text } from 'react-native-elements'
 import { compose, withState, withProps } from 'recompose'
@@ -49,8 +48,8 @@ export default class Main extends React.Component {
 		}
 	}
 
-	handleCardClick = id => {
-		this.props.navigation.navigate('Rank', { id })
+	handleCardClick = item => () => {
+		this.props.navigation.navigate('Ranking', { item })
 	}
 
 	renderBackground = () => (
@@ -77,7 +76,7 @@ export default class Main extends React.Component {
 	}
 
 	renderCard = (r, i) => (
-		<TouchableOpacity key={i} onPress={this.handleCardClick}>
+		<TouchableOpacity key={i} onPress={this.handleCardClick(r)}>
 			<Card containerStyle={styles.card.container}>
 				<ImageBackground
 					style={styles.card.image}
@@ -100,12 +99,10 @@ export default class Main extends React.Component {
 		const { scrollY } = this.props
 		const { rankingList, loading } = this.state
 		return (
-			<SafeAreaView
-				style={styles.container}
-				forceInset={{ top: 'never' }}
-			>
+			<View style={styles.container}>
 				<AnimatedParallax
 					backgroundSpeed={10}
+					showsVerticalScrollIndicator={false}
 					contentBackgroundColor={'#F8F8F8'}
 					parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
 					renderBackground={this.renderBackground}
@@ -130,7 +127,7 @@ export default class Main extends React.Component {
 						rankingList.map(this.renderCard)
 					)}
 				</AnimatedParallax>
-			</SafeAreaView>
+			</View>
 		)
 	}
 }

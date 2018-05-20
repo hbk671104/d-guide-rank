@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { createStackNavigator } from 'react-navigation'
 
 import Main from './src/page/main'
-import Rank from './src/page/rank'
+import Ranking from './src/page/ranking'
 
 const RootStack = createStackNavigator(
 	{
 		Main,
-		Rank
+		Ranking
 	},
 	{
 		headerMode: 'none'

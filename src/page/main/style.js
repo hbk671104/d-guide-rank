@@ -7,7 +7,6 @@ export const BORDER_RADIUS = 8
 export default {
 	container: {
 		flex: 1
-		// backgroundColor: 'white'
 	},
 	nabbar: {
 		image: {
@@ -41,12 +40,14 @@ export default {
 			alignItems: 'center'
 		},
 		title: {
-			color: 'white'
+			color: 'white',
+			textAlign: 'center'
 		},
 		subtitle: {
 			marginTop: 10,
 			fontSize: 20,
-			color: 'white'
+			color: 'white',
+			textAlign: 'center'
 		}
 	}
 }
