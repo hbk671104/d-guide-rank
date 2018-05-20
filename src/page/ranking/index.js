@@ -1,5 +1,10 @@
 import React from 'react'
-import { View, FlatList, LayoutAnimation } from 'react-native'
+import {
+	View,
+	FlatList,
+	LayoutAnimation,
+	InteractionManager
+} from 'react-native'
 import { Card, Text, Icon } from 'react-native-elements'
 
 import { rankItem } from 'api'
@@ -23,8 +28,10 @@ export default class Ranking extends React.Component {
 			const {
 				body: { data }
 			} = await rankItem(item.name)
-			LayoutAnimation.easeInEaseOut()
-			this.setState({ data: this.preprocessData(data) })
+			InteractionManager.runAfterInteractions(() => {
+				LayoutAnimation.easeInEaseOut()
+				this.setState({ data: this.preprocessData(data) })
+			})
 		} catch (error) {
 			console.log(error)
 		} finally {
