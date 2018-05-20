@@ -81,7 +81,7 @@ export default class Main extends React.Component {
 				<ImageBackground
 					style={styles.card.image}
 					imageStyle={{ borderRadius: BORDER_RADIUS }}
-					source={require('asset/homer.jpg')}
+					source={{ uri: r.banner_url }}
 				>
 					<View style={styles.card.cover} />
 					<Text style={styles.card.title} h3>

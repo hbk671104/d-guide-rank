@@ -18,7 +18,7 @@ export default class Ranking extends React.Component {
 
 	renderItem = ({ item }) => {
 		return (
-			<Card>
+			<Card containerStyle={styles.card.container}>
 				<Text>{item.name}</Text>
 				<Text>{item.desc}</Text>
 			</Card>
